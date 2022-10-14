@@ -2,11 +2,13 @@ package com.example.firstproject.dto;
 
 
 import com.example.firstproject.entity.Article;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @ToString
+@Getter
+@NoArgsConstructor
+
 public class ArticlesForm {
 
     private Long id; // id 필드 추가

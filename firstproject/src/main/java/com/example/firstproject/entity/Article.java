@@ -25,6 +25,16 @@ public class Article {
     @Column
     private String content;
 
+    /// 추가 된 부분 patch body에 수정될 값이 없으면(ex title) 이전에 있던 데이터를 그대로 유지.
+    public void patch(Article article) {
+         if (article.title != null) {
+            this.title = article.title;
+         if (article.content != null) {
+            this.content = article.content;
+         }
+         }
+    }
+
 //    public Long getId() {
 //        return id;
 //    }
