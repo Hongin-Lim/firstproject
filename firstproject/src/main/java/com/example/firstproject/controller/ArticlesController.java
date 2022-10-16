@@ -1,8 +1,10 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.ArticlesForm;
+import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class ArticlesController {
 
     @Autowired // 스프링부트가 미리 생성해 높은 리파지터리 객체를 가져옴(DI)
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/articles/new") // read 읽기
     public String newArticleForm() {
@@ -52,8 +57,13 @@ public class ArticlesController {
         Article articleEntity = articleRepository.findById(id).orElse(null);
 //        Optional<Article> articleEntity = articleRepository.findById(id);
 
+        List<CommentDto> commentDtos = commentService.comments(id); // 댓글 파트에서 추가한 부분
+
         // 2: 가여온 데이터를 모델에 등록
         model.addAttribute("article",articleEntity);
+
+        model.addAttribute("commentDtos",commentDtos); // 댓글 파트에서 추가한 부분
+
 
         // 3. 보여줄 페이지를 설정
         return "articles/show";
